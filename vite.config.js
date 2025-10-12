@@ -1,8 +1,10 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 
-// https://vite.dev/config/
 export default defineConfig({
   plugins: [react()],
-    base: '/', // si NO vas a subruta; si vas a subruta, ajústalo (ej. '/app/')
+  preview: {
+    allowedHosts: ['soothing-friendship-production.up.railway.app'], // 👈 Agrega tu dominio aquí
+    port: 4173, // opcional, puedes mantenerlo
+  },
 })
