@@ -5,7 +5,7 @@ import DashboardApp from './Components/common/DashboardApp';
 import ProtectedRoute from './utils/ProtectedRoute';
 import { AuthProvider } from './context/AuthContext';
 import Sidebar from './Components/common/Sidebar';
-import './components/common/Sidebar.css';
+import './Components/common/Sidebar.css';
 import RegisterFacial from './Components/auth/RegisterFacial';
 import CredencialEditor from './pages/CredencialEditor';
 
