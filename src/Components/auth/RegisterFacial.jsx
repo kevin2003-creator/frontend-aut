@@ -1,9 +1,17 @@
 import { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { FaCamera, FaUserPlus, FaUser, FaLock, FaEnvelope, FaPhone, FaEye, FaEyeSlash } from "react-icons/fa";
+import {
+  FaCamera,
+  FaUserPlus,
+  FaUser,
+  FaLock,
+  FaEnvelope,
+  FaPhone,
+  FaEye,
+  FaEyeSlash,
+} from "react-icons/fa";
 import "./Login.css";
-
 
 function RegisterFacial() {
   const navigate = useNavigate();
@@ -12,7 +20,6 @@ function RegisterFacial() {
   const [snapshot, setSnapshot] = useState(null);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-
   const [formData, setFormData] = useState({
     usuario: "",
     password: "",
@@ -21,10 +28,12 @@ function RegisterFacial() {
     nombre_completo: "",
     telefono: "",
   });
-
   const [isLoading, setIsLoading] = useState(false);
   const [success, setSuccess] = useState("");
   const [error, setError] = useState("");
+
+  // ✅ URL base del backend desde .env o localhost por defecto
+  const API_URL = import.meta.env.VITE_API_URL || "http://localhost:8000";
 
   // ===== Inicializar cámara =====
   useEffect(() => {
@@ -70,76 +79,75 @@ function RegisterFacial() {
   };
 
   // ===== Enviar formulario =====
-const handleSubmit = async (e) => {
-  e.preventDefault();
-  setIsLoading(true);
-  setError("");
-  setSuccess("");
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setIsLoading(true);
+    setError("");
+    setSuccess("");
 
-  // Validaciones previas
-  if (!snapshot) {
-    setError("Debes capturar una foto antes de registrarte.");
-    setIsLoading(false);
-    return;
-  }
+    // Validaciones previas
+    if (!snapshot) {
+      setError("Debes capturar una foto antes de registrarte.");
+      setIsLoading(false);
+      return;
+    }
 
-  if (!/^\d{8}$/.test(formData.telefono)) {
-    setError("El número de teléfono debe contener exactamente 8 dígitos.");
-    setIsLoading(false);
-    return;
-  }
+    if (!/^\d{8}$/.test(formData.telefono)) {
+      setError("El número de teléfono debe contener exactamente 8 dígitos.");
+      setIsLoading(false);
+      return;
+    }
 
-  if (formData.password !== formData.confirmPassword) {
-    setError("Las contraseñas no coinciden.");
-    setIsLoading(false);
-    return;
-  }
+    if (formData.password !== formData.confirmPassword) {
+      setError("Las contraseñas no coinciden.");
+      setIsLoading(false);
+      return;
+    }
 
-  // Solo correos Gmail
-  const gmailRegex = /^[a-zA-Z0-9._%+-]+@gmail\.com$/;
-  if (!gmailRegex.test(formData.email)) {
-    setError("Solo se permiten correos @gmail.com");
-    setIsLoading(false);
-    return;
-  }
+    const gmailRegex = /^[a-zA-Z0-9._%+-]+@gmail\.com$/;
+    if (!gmailRegex.test(formData.email)) {
+      setError("Solo se permiten correos @gmail.com");
+      setIsLoading(false);
+      return;
+    }
 
-  try {
-    const formToSend = new FormData();
-    Object.entries(formData).forEach(([key, value]) => {
-      if (key !== "confirmPassword") formToSend.append(key, value);
-    });
-    formToSend.append("rostro", snapshot, "rostro.jpg");
+    try {
+      const formToSend = new FormData();
+      Object.entries(formData).forEach(([key, value]) => {
+        if (key !== "confirmPassword") formToSend.append(key, value);
+      });
+      formToSend.append("rostro", snapshot, "rostro.jpg");
 
-    // ✅ SIN headers manuales
-    const response = await axios.post("http://localhost:8000/register-facial/", formToSend);
-    const data = response.data;
-    setSuccess("✅ Registro facial exitoso. Redirigiendo...");
+      // ✅ Usamos la variable API_URL dinámica
+      const response = await axios.post(`${API_URL}/register-facial/`, formToSend);
+      const data = response.data;
 
-    // (Opcional) Navega al editor de credenciales
-    const userData = {
-      id: response.data.usuario_id,
-      email: formData.email,
-      telefono: formData.telefono,
-      nombre: formData.nombre_completo,
-      nickname: formData.usuario,
-      foto: `data:image/jpeg;base64,${data.rostro_segmentado_b64}`, // ✅ usar la segmentada,
-      qr_url: response.data.qr_url,
-    };
-    navigate("/credencial", { state: { userData } });
+      setSuccess("✅ Registro facial exitoso. Redirigiendo...");
 
-  } catch (err) {
-    console.error("Error al registrar:", err?.response?.data || err);
-    setError(
-      err?.response?.data?.detail ||
-      err?.response?.data?.mensaje ||
-      "Error al registrar usuario. Verifica los datos ingresados."
-    );
-  } finally {
-    setIsLoading(false);
-  }
-};
+      // 🧩 Datos para la credencial
+      const userData = {
+        id: data.usuario_id,
+        email: formData.email,
+        telefono: formData.telefono,
+        nombre: formData.nombre_completo,
+        nickname: formData.usuario,
+        foto: `data:image/jpeg;base64,${data.rostro_segmentado_b64}`,
+        qr_url: data.qr_url,
+      };
 
-
+      // 🧭 Redirigir al editor de credenciales
+      setTimeout(() => navigate("/credencial", { state: { userData } }), 1500);
+    } catch (err) {
+      console.error("Error al registrar:", err?.response?.data || err);
+      setError(
+        err?.response?.data?.detail ||
+          err?.response?.data?.mensaje ||
+          "Error al registrar usuario. Verifica los datos ingresados."
+      );
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   // ===== Validaciones de contraseña =====
   const passwordsFilled = formData.password && formData.confirmPassword;
@@ -297,7 +305,9 @@ const handleSubmit = async (e) => {
                     <button
                       type="button"
                       className="btn btn-outline-secondary"
-                      onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                      onClick={() =>
+                        setShowConfirmPassword(!showConfirmPassword)
+                      }
                       tabIndex={-1}
                     >
                       {showConfirmPassword ? <FaEyeSlash /> : <FaEye />}
@@ -313,7 +323,9 @@ const handleSubmit = async (e) => {
                   className="btn btn-success w-100 mt-4"
                   disabled={isLoading || !canSubmit}
                 >
-                  {isLoading ? "Registrando..." : (
+                  {isLoading ? (
+                    "Registrando..."
+                  ) : (
                     <>
                       <FaUserPlus className="me-2" /> Registrar con Rostro
                     </>
@@ -339,9 +351,9 @@ const handleSubmit = async (e) => {
             >
               Inicia sesión
             </button>
-            </p>
+          </p>
           <p>
-            validar credencial{" "}
+            Validar credencial{" "}
             <button
               className="btn btn-link p-0"
               style={{
@@ -352,7 +364,7 @@ const handleSubmit = async (e) => {
               }}
               onClick={() => navigate("/credencial")}
             >
-              redireccion 
+              Redirección
             </button>
           </p>
         </div>
@@ -362,3 +374,4 @@ const handleSubmit = async (e) => {
 }
 
 export default RegisterFacial;
+

@@ -16,6 +16,9 @@ function CredencialEditor() {
   const [filter, setFilter] = useState("none");
   const [sticker, setSticker] = useState(null);
 
+  // ✅ Toma automáticamente la ruta del backend desde .env
+  const API_URL = import.meta.env.VITE_API_URL || "http://localhost:8000";
+
   if (!userData) {
     return (
       <div className="login-container">
@@ -33,48 +36,46 @@ function CredencialEditor() {
     );
   }
 
-// 📄 Generar PDF y enviar al backend
-const handleSendPDF = async () => {
-  try {
-    // 🧩 Capturar la vista como imagen
-    const canvas = await html2canvas(credencialRef.current, { useCORS: true, scale: 2 });
-    const imgData = canvas.toDataURL("image/png");
+  // 📄 Generar PDF y enviar al backend
+  const handleSendPDF = async () => {
+    try {
+      // 🧩 Capturar la vista como imagen
+      const canvas = await html2canvas(credencialRef.current, { useCORS: true, scale: 2 });
+      const imgData = canvas.toDataURL("image/png");
 
-    // 🧩 Crear PDF
-    const pdf = new jsPDF("landscape", "pt", "a6");
-    pdf.addImage(imgData, "PNG", 0, 0, 420, 300);
-    const pdfBlob = pdf.output("blob");
+      // 🧩 Crear PDF
+      const pdf = new jsPDF("landscape", "pt", "a6");
+      pdf.addImage(imgData, "PNG", 0, 0, 420, 300);
+      const pdfBlob = pdf.output("blob");
 
-    // 🧠 Convertir a Base64 (en texto)
-    const reader = new FileReader();
-    reader.onloadend = async () => {
-      const pdfBase64 = reader.result.split(",")[1]; // solo el contenido Base64
+      // 🧠 Convertir a Base64
+      const reader = new FileReader();
+      reader.onloadend = async () => {
+        const pdfBase64 = reader.result.split(",")[1];
 
-      // 🧾 Enviar como JSON (no multipart)
-      const payload = {
-        email: userData.email,
-        nombre_usuario: userData.nombre,
-        pdf_base64: pdfBase64,
+        const payload = {
+          email: userData.email,
+          nombre_usuario: userData.nombre,
+          pdf_base64: pdfBase64,
+        };
+
+        try {
+          // ✅ URL dinámica desde .env
+          const res = await axios.post(
+            `${API_URL}/credencial/enviar`,
+            payload,
+            { headers: { "Content-Type": "application/json" } }
+          );
+          console.log("✅ PDF enviado correctamente:", res.data);
+        } catch (err) {
+          console.error("❌ Error al enviar:", err.response?.data || err.message);
+        }
       };
-
-      try {
-        const res = await axios.post(
-          "http://localhost:8000/credencial/enviar",
-          payload,
-          { headers: { "Content-Type": "application/json" } } // 👈 clave
-        );
-        console.log("✅ PDF enviado correctamente:", res.data);
-      } catch (err) {
-        console.error("❌ Error al enviar:", err.response?.data || err.message);
-      }
-    };
-    reader.readAsDataURL(pdfBlob);
-  } catch (error) {
-    console.error("⚠️ Error generando PDF:", error);
-  }
-};
-
-
+      reader.readAsDataURL(pdfBlob);
+    } catch (error) {
+      console.error("⚠️ Error generando PDF:", error);
+    }
+  };
 
   const handleStickerSelect = (emoji) => {
     setSticker(sticker === emoji ? null : emoji);
@@ -91,11 +92,7 @@ const handleSendPDF = async () => {
         <div className="login-body text-center">
           {/* 🪪 Credencial centrada */}
           <div className="credencial-preview" ref={credencialRef}>
-            <img
-              src={credencialBg}
-              alt="Credencial Base"
-              className="credencial-bg"
-            />
+            <img src={credencialBg} alt="Credencial Base" className="credencial-bg" />
 
             <div className="foto-container">
               <img
@@ -124,8 +121,7 @@ const handleSendPDF = async () => {
           {/* 🎨 Barra de filtros */}
           <div className="filter-section mt-4">
             <h5>
-              <FaFilter className="me-2" />
-              Filtros
+              <FaFilter className="me-2" /> Filtros
             </h5>
             <div className="btn-group flex-wrap justify-content-center">
               <button className="btn btn-outline-dark m-1" onClick={() => setFilter("none")}>Normal</button>
@@ -139,8 +135,7 @@ const handleSendPDF = async () => {
           {/* 😎 Stickers */}
           <div className="stickers-section mt-3">
             <h5>
-              <FaSmile className="me-2" />
-              Stickers
+              <FaSmile className="me-2" /> Stickers
             </h5>
             <div className="btn-group flex-wrap justify-content-center">
               {["😎", "🎓", "🔥", "⭐", "👑", "💻"].map((emoji) => (
@@ -157,9 +152,9 @@ const handleSendPDF = async () => {
 
           {/* 🔘 Botones */}
           <div className="d-flex justify-content-center gap-2 mt-4">
-                <button className="btn btn-success" onClick={handleSendPDF}>
-                  <FaDownload className="me-2" /> Enviar Credencial al Correo
-                </button>
+            <button className="btn btn-success" onClick={handleSendPDF}>
+              <FaDownload className="me-2" /> Enviar Credencial al Correo
+            </button>
 
             <button
               className="btn btn-outline-secondary"
@@ -175,4 +170,5 @@ const handleSendPDF = async () => {
 }
 
 export default CredencialEditor;
+
 

@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from "react"; // 👈 agrega useEffect aquí
+import { useState, useRef, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import axios from "axios";
@@ -19,6 +19,9 @@ function Login() {
   const navigate = useNavigate();
   const location = useLocation();
 
+  // ✅ API base URL (usa .env o localhost como respaldo)
+  const API_URL = import.meta.env.VITE_API_URL || "http://localhost:8000";
+
   // ============================================================
   // 🔹 LOGIN NORMAL
   // ============================================================
@@ -28,7 +31,7 @@ function Login() {
     setError("");
 
     try {
-      const response = await axios.post("http://localhost:8000/login", {
+      const response = await axios.post(`${API_URL}/login`, {
         usuario,
         password,
       });
@@ -89,7 +92,7 @@ function Login() {
       const formData = new FormData();
       formData.append("file", imageBlob);
 
-      const res = await axios.post("http://localhost:8000/rostro/login", formData, {
+      const res = await axios.post(`${API_URL}/rostro/login`, formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
 
@@ -99,7 +102,7 @@ function Login() {
       if (data.coincide) {
         setMensajeFacial(`✅ Bienvenido ${data.nombre}`);
         login({
-          token: "TOKEN_FACIAL", // o el JWT real que devuelva tu backend
+          token: "TOKEN_FACIAL",
           user: {
             id: data.usuario_id,
             nombre: data.nombre,
@@ -127,147 +130,143 @@ function Login() {
     if (modoFacial) {
       const timer = setTimeout(() => {
         handleLoginFacial();
-      }, 500); // medio segundo después de mostrar la cámara
-
+      }, 500);
       return () => clearTimeout(timer);
     }
   }, [modoFacial]);
 
-// ============================================================
-// 🔹 INTERFAZ VISUAL (con animación de transición)
-// ============================================================
+  // ============================================================
+  // 🔹 INTERFAZ VISUAL
+  // ============================================================
+  return (
+    <div className="login-container">
+      <div className="login-card shadow">
+        <div className="login-header">
+          <img src={logo} alt="Lexion Logo" className="login-logo" />
+          <h1 className="login-title">Lexion</h1>
+          <p className="login-subtitle">Enter your intelligent workspace</p>
+        </div>
 
-return (
-  <div className="login-container">
-    <div className="login-card shadow">
-      <div className="login-header">
-        <img src={logo} alt="Lexion Logo" className="login-logo" />
-        <h1 className="login-title">Lexion</h1>
-        <p className="login-subtitle">Enter your intelligent workspace</p>
-      </div>
+        <div className="login-body">
+          <AnimatePresence mode="wait">
+            {/* 🧩 LOGIN NORMAL */}
+            {!modoFacial ? (
+              <motion.div
+                key="modoNormal"
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -30 }}
+                transition={{ duration: 0.4, ease: "easeOut" }}
+              >
+                {error && (
+                  <div className="alert alert-danger text-center">{error}</div>
+                )}
 
-      <div className="login-body">
-        <AnimatePresence mode="wait">
-          {/* 🧩 LOGIN NORMAL */}
-          {!modoFacial ? (
-            <motion.div
-              key="modoNormal"
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -30 }}
-              transition={{ duration: 0.4, ease: "easeOut" }}
-            >
-              {error && (
-                <div className="alert alert-danger text-center">{error}</div>
-              )}
+                <form className="login-form" onSubmit={handleSubmit}>
+                  <div className="form-group mb-3">
+                    <label className="form-label fw-semibold">
+                      <FaUser className="me-2" /> Usuario
+                    </label>
+                    <input
+                      type="text"
+                      className="form-control"
+                      value={usuario}
+                      onChange={(e) => setUsuario(e.target.value)}
+                      required
+                      placeholder="Ingresa tu usuario"
+                    />
+                  </div>
 
-              <form className="login-form" onSubmit={handleSubmit}>
-                <div className="form-group mb-3">
-                  <label className="form-label fw-semibold">
-                    <FaUser className="me-2" /> Usuario
-                  </label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    value={usuario}
-                    onChange={(e) => setUsuario(e.target.value)}
-                    required
-                    placeholder="Ingresa tu usuario"
-                  />
-                </div>
+                  <div className="form-group mb-4">
+                    <label className="form-label fw-semibold">
+                      <FaLock className="me-2" /> Contraseña
+                    </label>
+                    <input
+                      type="password"
+                      className="form-control"
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                      required
+                      placeholder="Ingresa tu contraseña"
+                    />
+                  </div>
 
-                <div className="form-group mb-4">
-                  <label className="form-label fw-semibold">
-                    <FaLock className="me-2" /> Contraseña
-                  </label>
-                  <input
-                    type="password"
-                    className="form-control"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    required
-                    placeholder="Ingresa tu contraseña"
-                  />
-                </div>
+                  <button
+                    type="submit"
+                    className="btn login-btn w-100"
+                    disabled={isLoading}
+                  >
+                    {isLoading ? (
+                      "Cargando..."
+                    ) : (
+                      <>
+                        <FaSignInAlt className="me-2" /> Ingresar
+                      </>
+                    )}
+                  </button>
+                </form>
 
                 <button
-                  type="submit"
-                  className="btn login-btn w-100"
-                  disabled={isLoading}
+                  className="btn btn-outline-secondary w-100 mt-3"
+                  onClick={() => setModoFacial(true)}
                 >
-                  {isLoading ? (
-                    "Cargando..."
-                  ) : (
-                    <>
-                      <FaSignInAlt className="me-2" /> Ingresar
-                    </>
-                  )}
+                  <FaCamera className="me-2" /> Ingresar con Rostro
                 </button>
-              </form>
-
-              <button
-                className="btn btn-outline-secondary w-100 mt-3"
-                onClick={() => setModoFacial(true)}
+              </motion.div>
+            ) : (
+              // 🧩 LOGIN FACIAL
+              <motion.div
+                key="modoFacial"
+                className="text-center facial-login"
+                initial={{ y: "-100%", opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                exit={{ y: "-100%", opacity: 0 }}
+                transition={{ duration: 0.5, ease: "easeOut" }}
               >
-                <FaCamera className="me-2" /> Ingresar con Rostro
-              </button>
-            </motion.div>
-          ) : (
-            // 🧩 LOGIN FACIAL (con animación desde arriba)
-<motion.div
-  key="modoFacial"
-  className="text-center facial-login"
-  initial={{ y: "-100%", opacity: 0 }}
-  animate={{ y: 0, opacity: 1 }}
-  exit={{ y: "-100%", opacity: 0 }}
-  transition={{ duration: 0.5, ease: "easeOut" }}
->
-  <video
-    ref={videoRef}
-    className="rounded shadow mb-3"
-    autoPlay
-    muted
-    width="250"
-  />
-  {mensajeFacial && <p>{mensajeFacial}</p>}
+                <video
+                  ref={videoRef}
+                  className="rounded shadow mb-3"
+                  autoPlay
+                  muted
+                  width="250"
+                />
+                {mensajeFacial && <p>{mensajeFacial}</p>}
 
-  <div className="d-flex justify-content-center gap-2 mt-3">
-    <button
-      className="btn btn-outline-secondary"
-      onClick={() => setModoFacial(false)}
-    >
-      <FaArrowLeft className="me-2" /> Volver
-    </button>
-  </div>
-</motion.div>
-          )}
-        </AnimatePresence>
-      </div>
-
-      {/* 🔹 Pie del login (solo visible en modo normal) */}
-      {!modoFacial && (
-        <div className="login-footer text-center mt-3">
-          <p>
-            ¿No tienes cuenta?{" "}
-            <button
-              className="btn btn-link p-0"
-              style={{
-                color: "#0d6efd",
-                textDecoration: "underline",
-                background: "none",
-                border: "none",
-              }}
-              onClick={() => navigate("/registerfacial")}
-            >
-              Crear cuenta
-            </button>
-          </p>
+                <div className="d-flex justify-content-center gap-2 mt-3">
+                  <button
+                    className="btn btn-outline-secondary"
+                    onClick={() => setModoFacial(false)}
+                  >
+                    <FaArrowLeft className="me-2" /> Volver
+                  </button>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
-      )}
-    </div>
-  </div>
-);
 
+        {!modoFacial && (
+          <div className="login-footer text-center mt-3">
+            <p>
+              ¿No tienes cuenta?{" "}
+              <button
+                className="btn btn-link p-0"
+                style={{
+                  color: "#0d6efd",
+                  textDecoration: "underline",
+                  background: "none",
+                  border: "none",
+                }}
+                onClick={() => navigate("/registerfacial")}
+              >
+                Crear cuenta
+              </button>
+            </p>
+          </div>
+        )}
+      </div>
+    </div>
+  );
 }
 
 export default Login;

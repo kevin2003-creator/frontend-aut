@@ -4,7 +4,9 @@ import react from '@vitejs/plugin-react'
 export default defineConfig({
   plugins: [react()],
   preview: {
-    allowedHosts: ['lexion-daossystem-pro.up.railway.app'], // 👈 Agrega tu dominio aquí
-    port: 4173, // opcional, puedes mantenerlo
+    port: 4173,
+    strictPort: true,
+    host: '0.0.0.0',
+    allowedHosts: ['lexion-daossystem-pro.up.railway.app'],
   },
 })

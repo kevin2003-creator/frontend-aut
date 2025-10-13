@@ -1,23 +1,25 @@
-// pages/Register.jsx
-import { useState } from 'react';
-import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
-import './Login.css';
-import { FaUserPlus, FaUser, FaLock, FaEnvelope, FaPhone } from 'react-icons/fa';
+import { useState } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import "./Login.css";
+import { FaUserPlus, FaUser, FaLock, FaEnvelope, FaPhone } from "react-icons/fa";
 
 function Register() {
   const [formData, setFormData] = useState({
-    usuario: '',
-    password: '',
-    email: '',
-    nombre_completo: '',
-    telefono: ''
+    usuario: "",
+    password: "",
+    email: "",
+    nombre_completo: "",
+    telefono: "",
   });
 
-  const [error, setError] = useState('');
-  const [success, setSuccess] = useState('');
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
+
+  // ✅ API base URL (lee de .env o usa localhost como respaldo)
+  const API_URL = import.meta.env.VITE_API_URL || "http://localhost:8000";
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -27,25 +29,27 @@ function Register() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
-    setError('');
-    setSuccess('');
+    setError("");
+    setSuccess("");
 
-    // Validación simple del teléfono (8 dígitos exactos)
+    // ✅ Validación de teléfono (8 dígitos)
     if (!/^\d{8}$/.test(formData.telefono)) {
-      setError('El número de teléfono debe contener exactamente 8 dígitos.');
+      setError("El número de teléfono debe contener exactamente 8 dígitos.");
       setIsLoading(false);
       return;
     }
 
     try {
-      await axios.post('http://localhost:8000/register', formData);
-      setSuccess('✅ Registro exitoso. Redirigiendo al login...');
-      setTimeout(() => navigate('/login'), 2000);
+      // ✅ Usamos la ruta dinámica del backend
+      await axios.post(`${API_URL}/register`, formData);
+
+      setSuccess("✅ Registro exitoso. Redirigiendo al login...");
+      setTimeout(() => navigate("/login"), 2000);
     } catch (err) {
-      console.error('Error al registrar:', err);
+      console.error("Error al registrar:", err);
       setError(
         err.response?.data?.detail ||
-        'Error al registrar usuario. Verifica los datos ingresados.'
+          "Error al registrar usuario. Verifica los datos ingresados."
       );
     } finally {
       setIsLoading(false);
@@ -146,8 +150,14 @@ function Register() {
               />
             </div>
 
-            <button type="submit" className="btn btn-success w-100" disabled={isLoading}>
-              {isLoading ? 'Registrando...' : (
+            <button
+              type="submit"
+              className="btn btn-success w-100"
+              disabled={isLoading}
+            >
+              {isLoading ? (
+                "Registrando..."
+              ) : (
                 <>
                   <FaUserPlus className="me-2" /> Registrar
                 </>
@@ -158,31 +168,30 @@ function Register() {
 
         <div className="login-footer">
           <p>
-            ¿Ya tienes cuenta?{' '}
+            ¿Ya tienes cuenta?{" "}
             <button
               className="btn btn-link p-0"
               style={{
-                color: '#0d6efd',
-                textDecoration: 'underline',
-                background: 'none',
-                border: 'none'
+                color: "#0d6efd",
+                textDecoration: "underline",
+                background: "none",
+                border: "none",
               }}
-              onClick={() => navigate('/login')}
+              onClick={() => navigate("/login")}
             >
               Inicia sesión
             </button>
-
           </p>
           <p>
-                        <button
+            <button
               className="btn btn-link p-0"
               style={{
-                color: '#0d6efd',
-                textDecoration: 'underline',
-                background: 'none',
-                border: 'none'
+                color: "#0d6efd",
+                textDecoration: "underline",
+                background: "none",
+                border: "none",
               }}
-              onClick={() => navigate('/registerfacial')}
+              onClick={() => navigate("/registerfacial")}
             >
               Registro Facial
             </button>
