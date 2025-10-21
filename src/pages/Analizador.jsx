@@ -80,6 +80,7 @@ function Analizador() {
 
   return (
     <>
+      {/* === CONTENIDO === */}
       <div className="container py-5 analizador-container">
         <div className="text-center mb-4">
           <h2 className="fw-bold titulo-principal">🌐 Análisis Léxico Multilingüe</h2>
@@ -88,21 +89,25 @@ function Analizador() {
           </p>
         </div>
 
-        {/* 🌍 Selector de idioma */}
+        {/* === SELECTOR DE IDIOMA (tarjetas con imágenes) === */}
         <div className="idioma-selector">
           <h5 className="idioma-titulo">🌍 Seleccione el Idioma del Texto</h5>
           <div className="idioma-grid">
             {[
-              { id: "español", nombre: "Español", pais: "Latinoamérica", icono: "🇪🇸" },
-              { id: "ingles", nombre: "Inglés", pais: "Estados Unidos", icono: "🇺🇸" },
-              { id: "ruso", nombre: "Ruso", pais: "Rusia", icono: "🇷🇺" },
+              { id: "español", nombre: "Español", pais: "Latinoamérica", bandera: "https://flagcdn.com/w40/es.png" },
+              { id: "ingles", nombre: "Inglés", pais: "Estados Unidos", bandera: "https://flagcdn.com/w40/us.png" },
+              { id: "ruso", nombre: "Ruso", pais: "Rusia", bandera: "https://flagcdn.com/w40/ru.png" },
             ].map((lang) => (
               <div
                 key={lang.id}
                 className={`idioma-card ${idioma === lang.id ? "activo" : ""}`}
                 onClick={() => setIdioma(lang.id)}
               >
-                <div className="idioma-icono">{lang.icono}</div>
+                <img
+                  src={lang.bandera}
+                  alt={lang.nombre}
+                  className="flag-icon"
+                />
                 <h6>{lang.nombre}</h6>
                 <p>{lang.pais}</p>
               </div>
@@ -110,7 +115,7 @@ function Analizador() {
           </div>
         </div>
 
-        {/* 📂 Subida de archivo */}
+        {/* === FORMULARIO === */}
         <div className="card shadow border-0 mb-5 rounded-4 card-analizador">
           <div className="card-header text-white fw-semibold fs-5 rounded-top-4 card-header-analizador">
             📂 Cargar archivo
@@ -147,7 +152,7 @@ function Analizador() {
           </div>
         </div>
 
-        {/* 📊 Resultados */}
+        {/* === RESULTADOS === */}
         {resultado && (
           <>
             <div className="alert text-center shadow-sm rounded-4 mb-5 text-dark alert-analizador">
@@ -164,7 +169,6 @@ function Analizador() {
               </div>
 
               <div className="card-body p-4">
-                {/* 🔹 Métricas */}
                 <div className="row text-center mb-4">
                   {[
                     ["🧮 Total Palabras", r.total_palabras ?? 0],
@@ -181,25 +185,30 @@ function Analizador() {
                   ))}
                 </div>
 
-                {/* 🔹 Categorías */}
-                <div className="categorias-compactas">
+                <div className="d-flex flex-wrap justify-content-center gap-3 mb-4 categorias-contenedor">
                   <div className="p-3 rounded-4 shadow-sm categoria-card categoria-pronombres">
-                    <h5 className="fw-bold text-success categoria-titulo">🧍 Pronombres</h5>
-                    <p className="small">{safeJoin(r.pronombres_personales)}</p>
+                    <h6 className="fw-bold text-success">🧍 Pronombres</h6>
+                    <div className="lista-contenido">
+                      <p className="small">{safeJoin(r.pronombres_personales)}</p>
+                    </div>
                   </div>
 
                   <div className="p-3 rounded-4 shadow-sm categoria-card categoria-nombres">
-                    <h5 className="fw-bold text-danger categoria-titulo">👤 Nombres</h5>
-                    <p className="small">{safeJoin(r.nombres_personas)}</p>
+                    <h6 className="fw-bold text-danger">👤 Nombres</h6>
+                    <div className="lista-contenido">
+                      <p className="small">{safeJoin(r.nombres_personas)}</p>
+                    </div>
                   </div>
 
                   <div className="p-3 rounded-4 shadow-sm categoria-card categoria-adjetivos">
-                    <h5 className="fw-bold text-warning categoria-titulo">💬 Adjetivos</h5>
-                    <p className="small">{safeJoin(r.adjetivos)}</p>
+                    <h6 className="fw-bold text-warning">💬 Adjetivos</h6>
+                    <div className="lista-contenido">
+                      <p className="small">{safeJoin(r.adjetivos)}</p>
+                    </div>
                   </div>
 
                   <div className="p-3 rounded-4 shadow-sm categoria-card categoria-otras">
-                    <h5 className="fw-bold text-info categoria-titulo">🧩 Otras categorías</h5>
+                    <h6 className="fw-bold text-info">🧩 Otras categorías</h6>
                     <ul className="small mb-0">
                       <li>Adverbios: <b>{asArray(otras.adverbios).length}</b></li>
                       <li>Números: <b>{asArray(otras.numeros).length}</b></li>
@@ -208,43 +217,13 @@ function Analizador() {
                     </ul>
                   </div>
                 </div>
-
-                {/* 🔹 Sustantivos y Verbos */}
-                <div className="row g-4 mt-3">
-                  <div className="col-md-6">
-                    <div className="card border-0 shadow-sm rounded-4">
-                      <div className="card-header text-white fw-semibold card-header-analizador">
-                        📘 Sustantivos
-                      </div>
-                      <div className="card-body lista-sustantivos">
-                        <p className="small text-muted mb-0">{safeJoin(r.sustantivos)}</p>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="col-md-6">
-                    <div className="card border-0 shadow-sm rounded-4">
-                      <div className="card-header text-white fw-semibold card-header-analizador">
-                        📗 Verbos
-                      </div>
-                      <div className="card-body lista-verbos">
-                        <p className="small text-muted mb-0">{safeJoin(r.verbos)}</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                {r.email_status && (
-                  <div className="alert alert-success text-center mt-4 rounded-4 shadow-sm alert-success-analizador">
-                    {r.email_status}
-                  </div>
-                )}
               </div>
             </div>
           </>
         )}
       </div>
 
-
+  
       <Modal show={showModal} onHide={() => handleEnviarCorreo(false)} centered>
         <Modal.Header closeButton className="modal-header-analizador">
           <Modal.Title>📩 Enviar reporte por correo</Modal.Title>

@@ -244,7 +244,7 @@ function Profile() {
               <strong>Teléfono:</strong> {user?.telefono || "No especificado"}
             </p>
             <p>
-              <strong>Rol:</strong> {user?.rol || "Usuario"}
+              <strong>Rol:</strong> {user?.rol || "Analista"}
             </p>
             <p>
               <strong>Registrado:</strong>{" "}

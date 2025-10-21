@@ -357,3 +357,35 @@
   transform: translateY(-4px);
   box-shadow: 0 10px 25px rgba(93, 150, 96, 0.2);
 }
+.idioma-icono {
+  font-family: "Twemoji Mozilla", "Noto Color Emoji", "Segoe UI Emoji", sans-serif;
+}
+/* 🌎 Banderas dentro de las tarjetas */
+.flag-icon {
+  width: 45px;
+  height: 32px;
+  border-radius: 6px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  margin-bottom: 0.6rem;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.idioma-card:hover .flag-icon {
+  transform: scale(1.05);
+}
+
+/* 🔹 Ajustar uniformidad de las categorías */
+.categorias-contenedor .categoria-card {
+  width: 270px;
+  height: 170px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  text-align: center;
+}
+
+.categorias-contenedor h6 {
+  font-size: 1.05rem;
+  font-weight: 700;
+}
