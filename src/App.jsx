@@ -4,16 +4,15 @@ import Register from './Components/auth/RegisterFacial';
 import DashboardApp from './Components/common/DashboardApp';
 import ProtectedRoute from './utils/ProtectedRoute';
 import { AuthProvider } from './context/AuthContext';
-import Sidebar from './Components/common/Sidebar';
 import RegisterFacial from './Components/auth/RegisterFacial';
-
 import CredencialEditor from './pages/CredencialEditor';
-
+import ForgotPassword from './Components/auth/ForgotPassword';
+import QrScanner from "../src/Components/auth/QrScanner";
 
 function App() {
   return (
     <Router>
-      <AuthProvider> {/* ✅ Ahora dentro del Router */}
+      <AuthProvider>
         <Routes>
           {/* Redirección inicial */}
           <Route path="/" element={<Navigate to="/login" replace />} />
@@ -23,24 +22,20 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/registerfacial" element={<RegisterFacial />} />
           <Route path="/credencial" element={<CredencialEditor />} />
-
-          {/* Sección protegida */}
+          <Route path="/forgot-password" element={<ForgotPassword />} />
+          <Route path="/qr-scan" element={<QrScanner />} />
+          
+          {/* 🔥 CORRECCIÓN: Solo DashboardApp dentro de ProtectedRoute */}
           <Route
             path="/dashboard/*"
             element={
               <ProtectedRoute>
-                <div style={{ display: 'flex', minHeight: '100vh' }}>
-                  <Sidebar />
-                  <main style={{ flex: 1, padding: '2rem', background: '#f9f9f9' }}>
-                    <DashboardApp />
-                  </main>
-                </div>
+                <DashboardApp /> {/* 👈 DashboardApp ya incluye el layout */}
               </ProtectedRoute>
             }
           />
-        
         </Routes>
-        </AuthProvider>
+      </AuthProvider>
     </Router>
   );
 }

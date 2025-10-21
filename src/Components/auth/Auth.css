@@ -1,0 +1,306 @@
+/* Estilos para recuperación de contraseña */
+.auth-container {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #a8e6cf 0%, #dcedc8 50%, #f8f8f8 100%);
+  padding: 1rem;
+}
+
+.auth-card {
+  background: white;
+  border-radius: 15px;
+  padding: 2rem;
+  width: 100%;
+  max-width: 450px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.auth-header {
+  text-align: center;
+  margin-bottom: 2rem;
+  position: relative;
+}
+
+.back-btn {
+  position: absolute;
+    left: -24px;
+    top: -24px;
+  background: none;
+  border: none;
+  color: #2e7d32;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+}
+
+.auth-header h2 {
+  color: #2e7d32;
+  margin: 0 0 0.5rem 0;
+}
+
+.auth-header p {
+  color: #666;
+  margin: 0;
+}
+
+.auth-steps {
+  margin-bottom: 2rem;
+}
+
+.step-indicator {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 0.5rem;
+}
+
+.step {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: #ddd;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 0.8rem;
+}
+
+.step.active {
+  background: #2e7d32;
+}
+
+.step-line {
+  width: 50px;
+  height: 2px;
+  background: #ddd;
+  margin: 0 0.5rem;
+}
+
+.step-labels {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.8rem;
+  color: #666;
+}
+
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.form-group label {
+  font-weight: 600;
+  color: #333;
+}
+
+.input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input-wrapper .icon {
+  position: absolute;
+  left: 1rem;
+  color: #666;
+}
+
+.input-wrapper input {
+  width: 100%;
+  padding: 0.8rem 1rem 0.8rem 2.5rem;
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: border-color 0.3s ease;
+}
+
+.input-wrapper input:focus {
+  outline: none;
+  border-color: #2e7d32;
+}
+
+.help-text {
+  color: #666;
+  font-size: 0.8rem;
+  margin-top: 0.25rem;
+}
+
+.form-actions {
+  display: flex;
+  gap: 1rem;
+}
+
+.auth-btn {
+  padding: 0.8rem 1.5rem;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  flex: 1;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.auth-btn.primary {
+  background: #2e7d32;
+  color: white;
+}
+
+.auth-btn.primary:hover:not(:disabled) {
+  background: #1b5e20;
+  transform: translateY(-2px);
+}
+
+.auth-btn.secondary {
+  background: #e0e0e0;
+  color: #333;
+}
+
+.auth-btn.secondary:hover {
+  background: #bdbdbd;
+}
+
+.auth-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none !important;
+}
+
+.alert {
+  padding: 0.8rem 1rem;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+  font-size: 0.9rem;
+}
+
+.alert-success {
+  background: #e8f5e8;
+  color: #2e7d32;
+  border: 1px solid #a5d6a7;
+}
+
+.alert-error {
+  background: #ffebee;
+  color: #c62828;
+  border: 1px solid #ef9a9a;
+}
+
+.auth-link {
+  text-align: center;
+  margin-top: 1rem;
+}
+
+.auth-link a {
+  color: #2e7d32;
+  text-decoration: none;
+}
+
+.auth-link a:hover {
+  text-decoration: underline;
+}
+/* Estilos mejorados para los inputs de token */
+.token-inputs {
+  display: flex;
+  gap: 0.8rem;
+  justify-content: center;
+  margin: 1.5rem 0;
+}
+
+.token-input {
+  width: 55px !important;
+  height: 65px !important;
+  text-align: center;
+  font-size: 1.8rem !important;
+  font-weight: bold;
+  padding: 0 !important;
+  border: 3px solid #e0e0e0 !important;
+  border-radius: 12px !important;
+  background: white;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.token-input:focus {
+  border-color: #2e7d32 !important;
+  box-shadow: 0 0 0 3px rgba(46, 125, 50, 0.2) !important;
+  transform: translateY(-2px);
+  outline: none;
+}
+
+.token-input:not(:placeholder-shown) {
+  border-color: #66bb6a !important;
+  background: #f8fff8;
+}
+
+/* Efecto de shake para inputs vacíos cuando se intenta enviar */
+.token-input:invalid {
+  animation: shake 0.5s ease-in-out;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  75% { transform: translateX(5px); }
+}
+
+/* Indicador de progreso del token */
+.token-progress {
+  display: flex;
+  justify-content: center;
+  gap: 0.3rem;
+  margin-bottom: 1rem;
+}
+
+.progress-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #e0e0e0;
+  transition: background 0.3s ease;
+}
+
+.progress-dot.filled {
+  background: #2e7d32;
+}
+
+/* Mejora responsive */
+@media (max-width: 480px) {
+  .token-inputs {
+    gap: 0.5rem;
+  }
+  
+  .token-input {
+    width: 45px !important;
+    height: 55px !important;
+    font-size: 1.5rem !important;
+    border-radius: 10px !important;
+  }
+}
+
+@media (max-width: 360px) {
+  .token-inputs {
+    gap: 0.3rem;
+  }
+  
+  .token-input {
+    width: 40px !important;
+    height: 50px !important;
+    font-size: 1.3rem !important;
+  }
+}

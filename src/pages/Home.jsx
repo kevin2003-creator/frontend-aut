@@ -1,16 +1,20 @@
-import './Home.css';
+import React from "react";
+import "./Home.css";
 
-const Home = () => {
+function Home() {
+
   return (
-    <div className="home-container">
-      <h1 className="home-title">Bienvenido al Sistema Lexion</h1>
-      <p className="home-subtitle">
-        Explora los módulos del panel desde el menú lateral. Gestiona usuarios, inventario y configuraciones con un entorno moderno y dinámico.
-      </p>
+    <div className="home-menu-container">
+        <div className="home-header">
+          <h1 className="home-title">LexionAU Dashboard</h1>
+          <p className="home-subtitle">
+            Selecciona una opción para comenzar 🌱
+          </p>
+        </div>
 
-
+      
     </div>
   );
-};
+}
 
 export default Home;

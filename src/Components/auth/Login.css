@@ -1,267 +1,1025 @@
-/* 🌿 Lexion Login — Estilo Eco Wellness Adaptado */
-@import url("https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css");
-
-/* ===== PALETA DE COLORES ===== */
 :root {
-  --color-dominante: #e8f5e9; /* fondo */
-  --color-secundario: #388e3c; /* textos */
-  --color-acento1: #66bb6a; /* verde suave */
-  --color-acento2: #a5d6a7; /* menta pastel */
+  --color-dominante: #e8f5e9;
+  --color-secundario: #5d9660;
+  --color-acento1: #66bb6a;
+  --color-acento2: #a5d6a7;
   --color-blanco: #ffffff;
 }
 
-/* ===== CONTENEDOR PRINCIPAL ===== */
-.login-container {
+/* 🌿 Reseteo básico */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* 🌿 Fondo general */
+.lexion-login-container {
   min-height: 100vh;
   background: linear-gradient(135deg, #a8e6cf 0%, #dcedc8 50%, #f8f8f8 100%);
   display: flex;
   align-items: center;
   justify-content: center;
+  padding: 1rem;
   font-family: "Poppins", sans-serif;
-  overflow: hidden;
-  position: relative;
-  padding: 2rem;
 }
 
-/* ===== ELEMENTOS DE FONDO ===== */
-.leaf {
-  position: absolute;
-  width: 22px;
-  height: 22px;
-  background: radial-gradient(ellipse at center, #4caf50, #81c784);
-  border-radius: 0 100% 0 100%;
-  opacity: 0.35;
-  animation: floatLeaf 8s ease-in-out infinite;
-  z-index: 0;
-}
-
-.leaf:nth-child(1) { top: 15%; left: 10%; animation-delay: 0s; transform: rotate(45deg); }
-.leaf:nth-child(2) { top: 65%; left: 80%; animation-delay: 2s; transform: rotate(-30deg); }
-.leaf:nth-child(3) { top: 75%; left: 25%; animation-delay: 4s; transform: rotate(60deg); }
-.leaf:nth-child(4) { top: 30%; left: 70%; animation-delay: 6s; transform: rotate(-45deg); }
-
-@keyframes floatLeaf {
-  0%, 100% { transform: translateY(0); opacity: 0.4; }
-  50% { transform: translateY(-20px); opacity: 0.7; }
-}
-
-/* ===== TARJETA ===== */
-.login-card {
-  background: rgba(255, 255, 255, 0.85);
-  border: 1px solid rgba(76, 175, 80, 0.25);
-  backdrop-filter: blur(18px);
-  border-radius: 28px;
-  box-shadow: 0 15px 35px rgba(76, 175, 80, 0.1);
-  max-width: 420px;
+/* 🌿 Tarjeta doble */
+.lexion-login-card {
+  display: flex;
+  max-width: 1000px;
   width: 100%;
+  background: var(--color-blanco);
+  border-radius: 20px;
   overflow: hidden;
-  z-index: 1;
-  animation: fadeIn 1s ease;
-  transition: transform 0.4s ease, box-shadow 0.4s ease;
+  box-shadow: 0 15px 35px rgba(76, 175, 80, 0.15);
 }
 
-.login-card:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 20px 45px rgba(76, 175, 80, 0.15);
-}
-
-/* ===== ENCABEZADO ===== */
-.login-header {
+/* 🌿 Panel izquierdo */
+.lexion-left {
+  flex: 1;
+  background: linear-gradient(135deg, #4caf50, #81c784);
+  color: var(--color-blanco);
+  display: flex;
+  align-items: center;
+  justify-content: center;
   text-align: center;
-  padding: 2rem 1rem 1rem;
-  color: var(--color-secundario);
+  padding: 2rem 1.5rem;
+  min-height: 500px;
 }
 
-.login-logo {
-  width: 110px;
-  height: 110px;
+.lexion-left-content {
+  width: 100%;
+  max-width: 300px;
+}
+
+.lexion-left-content h2 {
+  font-weight: 400;
+  font-size: 0.9rem;
+  letter-spacing: 1px;
+  opacity: 0.9;
+  margin-bottom: 0.5rem;
+}
+
+.lexion-left-content h1 {
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin: 0.3rem 0 0.8rem;
+}
+
+.lexion-left-content p {
+  font-size: 0.9rem;
+  opacity: 0.9;
+  margin-bottom: 1.2rem;
+}
+
+.lexion-logo {
+  width: 80px;
+  height: 80px;
   margin-bottom: 1rem;
   animation: zenBreath 4s ease-in-out infinite;
 }
 
+.lexion-learn-btn {
+  background: rgba(255, 255, 255, 0.2);
+  border: 2px solid var(--color-blanco);
+  border-radius: 25px;
+  padding: 8px 20px;
+  color: var(--color-blanco);
+  font-weight: 500;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.lexion-learn-btn:hover {
+  background: var(--color-blanco);
+  color: var(--color-secundario);
+}
+
+/* 🎯 Indicador de progreso */
+.progress-indicator {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin: 1.5rem 0 0.5rem;
+}
+
+.step-circle {
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.3);
+  border: 2px solid rgba(255, 255, 255, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 0.9rem;
+  transition: all 0.4s ease;
+}
+
+.step-circle.active {
+  background: var(--color-blanco);
+  color: var(--color-secundario);
+  border-color: var(--color-blanco);
+  transform: scale(1.1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.step-line {
+  width: 40px;
+  height: 2px;
+  background: rgba(255, 255, 255, 0.4);
+}
+
+.step-text {
+  font-size: 0.85rem;
+  margin-top: 0.3rem;
+  opacity: 0.95;
+}
+
+/* 🌿 Panel derecho */
+.lexion-right {
+  flex: 1;
+  padding: 2rem 1.5rem;
+  background: var(--color-blanco);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow-y: auto;
+  max-height: 90vh;
+}
+
+.lexion-form-wrapper {
+  width: 100%;
+  max-width: 380px;
+  text-align: center;
+}
+
+.welcome-title {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--color-secundario);
+  margin-bottom: 0.3rem;
+}
+
+.welcome-sub {
+  font-size: 0.85rem;
+  color: var(--color-acento1);
+  margin-bottom: 1.5rem;
+}
+
+/* 📸 Contenedor de cámara mejorado */
+.camera-container {
+  width: 100%;
+  margin: 1.5rem 0;
+}
+
+.camera-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 320px;
+  margin: 0 auto;
+  border-radius: 20px;
+  overflow: hidden;
+  background: #000;
+  box-shadow: 0 8px 25px rgba(76, 175, 80, 0.2);
+}
+
+.camera-video {
+  width: 100%;
+  height: auto;
+  display: block;
+  aspect-ratio: 4/3;
+  object-fit: cover;
+}
+
+/* Guía de rostro */
+.face-guide {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 200px;
+  height: 260px;
+  pointer-events: none;
+  z-index: 10;
+}
+
+.face-oval {
+  width: 100%;
+  height: 100%;
+  border: 3px dashed rgba(76, 175, 80, 0.7);
+  border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(76, 175, 80, 0.1) 0%,
+    transparent 70%
+  );
+  animation: pulseGuide 2s ease-in-out infinite;
+}
+
+@keyframes pulseGuide {
+  0%, 100% {
+    opacity: 0.6;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.02);
+  }
+}
+
+.camera-instructions {
+  position: absolute;
+  bottom: 15px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0, 0, 0, 0.7);
+  color: white;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  z-index: 15;
+  animation: fadeInUp 0.5s ease;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+}
+
+/* Preview de snapshot */
+.snapshot-preview {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4/3;
+}
+
+.snapshot-preview img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.snapshot-badge {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: linear-gradient(135deg, #4caf50, #66bb6a);
+  color: white;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  box-shadow: 0 4px 12px rgba(76, 175, 80, 0.3);
+  animation: slideInRight 0.5s ease;
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.camera-controls {
+  text-align: center;
+}
+
+/* 🌿 Formulario */
+.login-form {
+  width: 100%;
+}
+
+.login-form .form-group {
+  position: relative;
+  margin-bottom: 1rem;
+  text-align: left;
+}
+
+/* Etiqueta */
+.login-form label {
+  display: block;
+  margin-bottom: 0.4rem;
+  font-weight: 600;
+  color: #2e7d32;
+  font-size: 0.85rem;
+}
+
+/* Contenedor del input + ícono */
+.login-form .input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.login-form .input-wrapper input {
+  width: 100%;
+  padding: 10px 12px 10px 38px;
+  border: 1.6px solid rgba(76, 175, 80, 0.35);
+  border-radius: 12px;
+  font-size: 0.9rem;
+  background: rgba(255, 255, 255, 0.95);
+  color: #2e7d32;
+  transition: all 0.3s ease;
+}
+
+.login-form .input-wrapper input::placeholder {
+  color: #a5a5a5;
+  font-size: 0.85rem;
+}
+
+/* Ícono dentro del campo */
+.login-form .input-wrapper .icon {
+  position: absolute;
+  left: 12px;
+  color: #66bb6a;
+  font-size: 0.95rem;
+  transition: color 0.3s ease;
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* Animaciones al enfocar */
+.login-form .input-wrapper input:focus {
+  border-color: #4caf50;
+  box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.15);
+  outline: none;
+  background: #ffffff;
+}
+
+.login-form .input-wrapper input:focus ~ .icon {
+  color: #2e7d32;
+}
+
+/* 🔐 Inputs de contraseña con toggle */
+.password-input-group {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.form-control-password {
+  width: 100%;
+  padding: 10px 45px 10px 12px;
+  border: 1.6px solid rgba(76, 175, 80, 0.35);
+  border-radius: 12px;
+  font-size: 0.9rem;
+  background: rgba(255, 255, 255, 0.95);
+  color: #2e7d32;
+  transition: all 0.3s ease;
+}
+
+.form-control-password:focus {
+  border-color: #4caf50;
+  box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.15);
+  outline: none;
+  background: #ffffff;
+}
+
+.form-control-password.is-invalid {
+  border-color: #e53935;
+  background: #ffebee;
+}
+
+.form-control-password.is-valid {
+  border-color: #43a047;
+  background: #f1f8e9;
+}
+
+.toggle-password {
+  position: absolute;
+  right: 12px;
+  background: none;
+  border: none;
+  color: #66bb6a;
+  cursor: pointer;
+  padding: 5px;
+  transition: color 0.3s ease;
+  font-size: 1.1rem;
+}
+
+.toggle-password:hover {
+  color: #2e7d32;
+}
+
+.password-hint {
+  display: block;
+  margin-top: 0.4rem;
+  font-size: 0.75rem;
+  color: #757575;
+}
+
+.text-success {
+  color: #43a047 !important;
+  font-size: 0.8rem;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-top: 0.4rem;
+}
+
+.text-danger {
+  color: #e53935 !important;
+  font-size: 0.8rem;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-top: 0.4rem;
+}
+
+/* 🌿 Botón principal */
+.lexion-login-btn {
+  width: 100%;
+  background: linear-gradient(135deg, #4caf50, #81c784, #aed581);
+  border: none;
+  border-radius: 25px;
+  padding: 11px;
+  color: var(--color-blanco);
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  margin-top: 1.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.lexion-login-btn:hover:not(:disabled) {
+  background: linear-gradient(135deg, #43a047, #66bb6a, #9ccc65);
+  box-shadow: 0 10px 25px rgba(76, 175, 80, 0.2);
+  transform: translateY(-2px);
+}
+
+.lexion-login-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Spinner para loading */
+.spinner-border {
+  display: inline-block;
+  width: 1rem;
+  height: 1rem;
+  vertical-align: text-bottom;
+  border: 0.2em solid currentColor;
+  border-right-color: transparent;
+  border-radius: 50%;
+  animation: spinner-border 0.75s linear infinite;
+}
+
+@keyframes spinner-border {
+  to { transform: rotate(360deg); }
+}
+
+.spinner-border-sm {
+  width: 0.875rem;
+  height: 0.875rem;
+  border-width: 0.15em;
+}
+
+/* 🌿 Botones alternativos */
+.login-alt-btn {
+  width: 100%;
+  padding: 9px 12px;
+  border-radius: 25px;
+  border: 2px solid var(--color-acento1);
+  background-color: transparent;
+  color: var(--color-secundario);
+  font-weight: 600;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.login-alt-btn:hover {
+  background: linear-gradient(135deg, var(--color-acento1), var(--color-acento2));
+  color: var(--color-blanco);
+  box-shadow: 0 8px 20px rgba(102, 187, 106, 0.3);
+  transform: translateY(-2px);
+}
+
+/* 📢 Alertas */
+.alert {
+  padding: 0.75rem 1rem;
+  margin-bottom: 1rem;
+  border-radius: 12px;
+  font-size: 0.85rem;
+  animation: slideDown 0.4s ease;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.alert-success {
+  background: #e8f5e9;
+  color: #2e7d32;
+  border: 1px solid #4caf50;
+}
+
+.alert-danger {
+  background: #ffebee;
+  color: #c62828;
+  border: 1px solid #e53935;
+}
+
+/* 🌿 Enlace inferior */
+.register-text {
+  margin-top: 1.2rem;
+  font-size: 0.85rem;
+  color: var(--color-secundario);
+}
+
+.register-text a {
+  color: var(--color-acento1);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.register-text a:hover {
+  text-decoration: underline;
+}
+
+/* 🌿 Animación suave */
 @keyframes zenBreath {
   0%, 100% { transform: scale(1); }
   50% { transform: scale(1.05); }
 }
 
-.login-header h2 {
-  font-weight: 700;
-  font-size: 1.9rem;
-  color: var(--color-secundario);
-}
-
-.login-header p {
-  font-size: 0.95rem;
-  color: #66bb6a;
-  margin-top: 0.5rem;
-}
-
-/* ===== FORMULARIO ===== */
-.login-body {
-  padding: 2rem;
-  background: rgba(255, 255, 255, 0.6);
-  border-radius: 22px 22px 0 0;
-  
-}
-
-.login-form .form-group {
-  margin-bottom: 1.4rem;
-  position: relative;
-}
-
-.login-form input {
-  width: 100%;
-  border: 1.5px solid rgba(76, 175, 80, 0.25);
-  border-radius: 14px;
-  padding: 14px 18px;
-  font-size: 1rem;
-  background: rgba(255, 255, 255, 0.9);
-  color: #2e7d32;
-  transition: all 0.3s ease;
-}
-
-.login-form input:focus {
-  border-color: #4caf50;
-  box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.15);
-  background: #ffffff;
-  outline: none;
-  transform: scale(1.02);
-}
-
-/* ===== BOTÓN ===== */
-.login-btn {
-  width: 100%;
-  background: linear-gradient(135deg, #4caf50, #81c784, #aed581);
-  border: none;
-  border-radius: 16px;
-  padding: 14px;
-  color: white;
-  font-weight: 600;
-  letter-spacing: 0.3px;
-  cursor: pointer;
-  position: relative;
-  overflow: hidden;
-  transition: all 0.3s ease;
-  margin-top: 0.5rem;
-}
-
-.login-btn:hover {
-  background: linear-gradient(135deg, #43a047, #66bb6a, #9ccc65);
-  box-shadow: 0 10px 25px rgba(76, 175, 80, 0.2);
-  transform: translateY(-2px);
-}
-
-.login-btn::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: -75%;
-  width: 50%;
-  height: 100%;
-  background: rgba(255, 255, 255, 0.2);
-  transform: skewX(-25deg);
-  transition: left 0.6s ease;
-}
-
-.login-btn:hover::after {
-  left: 125%;
-}
-/* ===== BOTÓN Registrar ===== */
-.btn-success {
-  width: 100%;
-  background: linear-gradient(135deg, #4caf50, #81c784, #aed581);
-  border: none;
-  border-radius: 16px;
-  padding: 14px;
-  color: white;
-  font-weight: 600;
-  letter-spacing: 0.3px;
-  cursor: pointer;
-  position: relative;
-  overflow: hidden;
-  transition: all 0.3s ease;
-  margin-top: 0.5rem;
-}
-
-.btn-success:hover {
-  background: linear-gradient(135deg, #43a047, #66bb6a, #9ccc65);
-  box-shadow: 0 10px 25px rgba(76, 175, 80, 0.2);
-  transform: translateY(-2px);
-}
-
-.btn-success::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: -75%;
-  width: 50%;
-  height: 100%;
-  background: rgba(255, 255, 255, 0.2);
-  transform: skewX(-25deg);
-  transition: left 0.6s ease;
-}
-
-.btn-success:hover::after {
-  left: 125%;
-}
-
-/* ===== FOOTER ===== */
-.login-footer {
-  text-align: center;
-  padding: 1.2rem 0;
-  font-size: 0.9rem;
-  background: rgba(255, 255, 255, 0.85);
-  color: #558b2f;
-  border-radius: 0 0 22px 22px;
-}
-
-.login-footer button {
-  color: #2e7d32;
-  font-weight: 600;
-  background: none;
-  border: none;
-  text-decoration: underline;
-  cursor: pointer;
-  transition: color 0.3s ease;
-}
-
-.login-footer button:hover {
-  color: #1b5e20;
-}
-
-/* ===== ANIMACIONES ===== */
-@keyframes fadeIn {
-  from { opacity: 0; transform: scale(0.97); }
-  to { opacity: 1; transform: scale(1); }
-}
-
-/* ===== RESPONSIVIDAD ===== */
-@media (max-width: 480px) {
-  .login-card {
-    margin: 0 1rem;
-    border-radius: 22px;
+/* 🌿 Responsividad para tablets */
+@media (max-width: 992px) {
+  .lexion-login-card {
+    max-width: 95%;
   }
-  .login-header h2 {
+  
+  .lexion-left {
+    padding: 1.8rem 1.3rem;
+  }
+  
+  .lexion-right {
+    padding: 1.8rem 1.3rem;
+  }
+
+  .lexion-form-wrapper {
+    max-width: 350px;
+  }
+
+  .camera-wrapper {
+    max-width: 280px;
+  }
+
+  .face-guide {
+    width: 170px;
+    height: 220px;
+  }
+}
+
+/* 🌿 Responsividad para celular */
+@media (max-width: 768px) {
+  .lexion-login-container {
+    padding: 0.5rem;
+  }
+
+  .lexion-login-card {
+    flex-direction: column;
+    max-width: 100%;
+    margin: 0.5rem;
+  }
+  
+  .lexion-left {
+    padding: 2rem 1.2rem;
+    min-height: 320px;
+  }
+
+  .lexion-left-content h1 {
     font-size: 1.6rem;
   }
-  .login-logo {
-    width: 90px;
-    height: 90px;
+
+  .lexion-left-content h2 {
+    font-size: 0.85rem;
+  }
+
+  .lexion-left-content p {
+    font-size: 0.85rem;
+  }
+
+  .lexion-logo {
+    width: 70px;
+    height: 70px;
+  }
+
+  .progress-indicator {
+    margin: 1rem 0 0.5rem;
+  }
+
+  .step-circle {
+    width: 32px;
+    height: 32px;
+    font-size: 0.85rem;
+  }
+
+  .step-line {
+    width: 35px;
+  }
+  
+  .lexion-right {
+    padding: 2rem 1.2rem;
+    max-height: none;
+  }
+
+  .lexion-form-wrapper {
+    max-width: 100%;
+  }
+
+  .welcome-title {
+    font-size: 1.4rem;
+  }
+
+  .welcome-sub {
+    font-size: 0.8rem;
+  }
+
+  .camera-wrapper {
+    max-width: 100%;
+    border-radius: 15px;
+  }
+
+  .face-guide {
+    width: 160px;
+    height: 200px;
+  }
+
+  .camera-instructions {
+    font-size: 0.75rem;
+    padding: 6px 12px;
+  }
+
+  .login-form .input-wrapper input {
+    padding: 9px 10px 9px 36px;
+    font-size: 0.85rem;
+  }
+
+  .form-control-password {
+    padding: 9px 40px 9px 10px;
+    font-size: 0.85rem;
+  }
+
+  .lexion-login-btn,
+  .login-alt-btn {
+    padding: 10px;
+    font-size: 0.85rem;
   }
 }
-/* 🔒 Ocultar el botón nativo de mostrar contraseña (Chrome, Edge, Safari) */
-input[type="password"]::-ms-reveal,
-input[type="password"]::-ms-clear,
-input[type="password"]::-webkit-clear-button,
-input[type="password"]::-webkit-reveal {
-  display: none;
-  appearance: none;
+
+/* 🌿 Para pantallas muy pequeñas */
+@media (max-width: 400px) {
+  .lexion-login-container {
+    padding: 0.3rem;
+  }
+
+  .lexion-login-card {
+    border-radius: 15px;
+  }
+
+  .lexion-left {
+    padding: 1.5rem 1rem;
+    min-height: 280px;
+  }
+
+  .lexion-right {
+    padding: 1.5rem 1rem;
+  }
+
+  .welcome-title {
+    font-size: 1.3rem;
+  }
+
+  .camera-wrapper {
+    border-radius: 12px;
+  }
+
+  .face-guide {
+    width: 140px;
+    height: 180px;
+  }
+
+  .login-form label {
+    font-size: 0.8rem;
+  }
+
+  .login-form .input-wrapper input {
+    font-size: 0.8rem;
+    padding: 8px 10px 8px 34px;
+  }
+
+  .form-control-password {
+    font-size: 0.8rem;
+    padding: 8px 38px 8px 10px;
+  }
 }
 
-.facial-login {
-  background: rgba(255, 255, 255, 0.9);
+/* 🌿 Scroll suave para panel derecho */
+.lexion-right::-webkit-scrollbar {
+  width: 6px;
+}
+
+.lexion-right::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+.lexion-right::-webkit-scrollbar-thumb {
+  background: #4caf50;
+  border-radius: 10px;
+}
+
+.lexion-right::-webkit-scrollbar-thumb:hover {
+  background: #388e3c;
+}
+
+/* 🎥 LOGIN FACIAL MEJORADO */
+.facial-login-improved {
+  width: 100%;
+  max-width: 400px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.facial-video-container {
+  position: relative;
+  width: 100%;
+  max-width: 350px;
+  margin: 0 auto 1rem;
+  border-radius: 20px;
+  overflow: hidden;
+  background: #000;
+  box-shadow: 0 10px 30px rgba(76, 175, 80, 0.25);
+}
+
+.facial-video {
+  width: 100%;
+  height: auto;
+  display: block;
+  aspect-ratio: 4/3;
+  object-fit: cover;
+}
+
+/* Guía circular para rostro */
+.facial-guide-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  z-index: 10;
+}
+
+.facial-guide-circle {
+  width: 220px;
+  height: 280px;
+  border: 3px dashed rgba(76, 175, 80, 0.8);
+  border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(76, 175, 80, 0.1) 0%,
+    transparent 70%
+  );
+  animation: pulseFacialGuide 2s ease-in-out infinite;
+}
+
+@keyframes pulseFacialGuide {
+  0%, 100% {
+    opacity: 0.6;
+    transform: scale(1);
+    border-color: rgba(76, 175, 80, 0.8);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.03);
+    border-color: rgba(102, 187, 106, 1);
+  }
+}
+
+/* Badge de status */
+.facial-status-badge {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  color: white;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(10px);
+  z-index: 15;
+  animation: slideInBadge 0.4s ease;
+}
+
+@keyframes slideInBadge {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.facial-status-badge.capturing {
+  background: linear-gradient(135deg, #2196f3, #64b5f6);
+  animation: pulseBadge 1.5s ease-in-out infinite;
+}
+
+.facial-status-badge.processing {
+  background: linear-gradient(135deg, #ff9800, #ffb74d);
+}
+
+.facial-status-badge.success {
+  background: linear-gradient(135deg, #4caf50, #66bb6a);
+  animation: successPop 0.5s ease;
+}
+
+.facial-status-badge.error {
+  background: linear-gradient(135deg, #f44336, #e57373);
+  animation: errorShake 0.5s ease;
+}
+
+@keyframes pulseBadge {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+}
+
+@keyframes successPop {
+  0% {
+    transform: scale(0.5);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes errorShake {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-10px);
+  }
+  75% {
+    transform: translateX(10px);
+  }
+}
+
+/* Barra de progreso */
+.facial-progress-container {
+  width: 100%;
+  height: 6px;
+  background: rgba(76, 175, 80, 0.2);
+  border-radius: 10px;
+  overflow: hidden;
+  margin-bottom: 1rem;
+}
+
+.facial-progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, #4caf50, #66bb6a, #81c784);
+  border-radius: 10px;
+  transition: width 0.5s ease;
+  animation: progressShine 1.5s ease-in-out infinite;
+}
+
+@keyframes progressShine {
+  0% {
+    background-position: -100% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+/* Mensaje de estado */
+.facial-message {
+  padding: 0.75rem 1rem;
   border-radius: 12px;
-  padding: 20px;
-  box-shadow: 0 4px 16px rgba(0,0,0,0.1);
-  backdrop-filter: blur(8px);
+  font-size: 0.9rem;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+  animation: fadeInMessage 0.4s ease;
+}
+
+@keyframes fadeInMessage {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.facial-message.capturing {
+  background: #e3f2fd;
+  color: #1976d2;
+  border: 1px solid #2196f3;
+}
+
+.facial-message.processing {
+  background: #fff3e0;
+  color: #f57c00;
+  border: 1px solid #ff9800;
+}
+
+.facial-message.success {
+  background: #e8f5e9;
+  color: #2e7d32;
+  border: 1px solid #4caf50;
+}
+
+.facial-message.error {
+  background: #ffebee;
+  color: #c62828;
+  border: 1px solid #f44336;
+}
+
+/* Acciones del facial */
+.facial-actions {
+  width: 100%;
+}
+
+/* Responsivo para facial login */
+@media (max-width: 768px) {
+  .facial-video-container {
+    max-width: 100%;
+    border-radius: 15px;
+  }
+
+  .facial-guide-circle {
+    width: 180px;
+    height: 240px;
+  }
+
+  .facial-status-badge {
+    width: 40px;
+    height: 40px;
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 400px) {
+  .facial-guide-circle {
+    width: 160px;
+    height: 210px;
+  }
+
+  .facial-video-container {
+    border-radius: 12px;
+  }
 }

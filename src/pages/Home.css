@@ -1,145 +1,128 @@
-/* Home.css — Tema Eco Wellness 🌿 */
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap");
+
 :root {
-  --primary-color: #4caf50;      /* Verde medio - acento natural */
-  --secondary-color: #81c784;    /* Verde suave - contraste orgánico */
-  --background-color: #a8e6cf;   /* Verde menta - fondo dominante */
-  --text-dark: #1b5e20;          /* Verde oscuro - texto principal */
-  --text-light: #f8f8f8;         /* Blanco cálido */
+  --verde-suave: #e8f5e9;
+  --verde-claro: #c8e6c9;
+  --verde-medio: #81c784;
+  --verde-oscuro: #388e3c;
+  --blanco: #ffffff;
 }
 
-/* ====== CONTENEDOR PRINCIPAL ====== */
-.home-container {
-  background: linear-gradient(
-    145deg,
-    rgba(255, 255, 255, 0.8),
-    rgba(255, 255, 255, 0.7)
-  );
-  border-radius: 18px;
-  padding: 3rem 2rem;
+/* 🌿 Contenedor principal */
+.home-menu-container {
+  min-height: 100vh;
+  background: transparent !important;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: "Poppins", sans-serif;
+}
+
+/* 🌿 Contenido central */
+.home-menu-content {
   text-align: center;
-  box-shadow: 0 8px 25px rgba(76, 175, 80, 0.15);
-  color: var(--text-dark);
-  backdrop-filter: blur(12px);
-  animation: fadeIn 0.7s ease;
+  color: var(--verde-oscuro);
+  padding: 2rem;
+  width: 100%;
+  max-width: 700px;
 }
 
-/* ====== TITULOS ====== */
-.home-title {
-  font-weight: 700;
-  font-size: 2rem;
-  background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+/* 🌿 Encabezado */
+.home-header {
   margin-bottom: 1rem;
-  letter-spacing: -0.02em;
+}
+
+.home-logo {
+  width: 90px;
+  height: 90px;
+  margin-bottom: 1rem;
+  animation: zenBreath 4s ease-in-out infinite;
+}
+
+.home-title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--verde-oscuro);
+  margin-bottom: 0.3rem;
 }
 
 .home-subtitle {
+  color: var(--verde-medio);
   font-size: 1.1rem;
-  color: #33691e;
-  max-width: 650px;
-  margin: 0 auto 2rem;
-  line-height: 1.6;
-  opacity: 0.9;
 }
 
-/* ====== TARJETAS ====== */
-.home-cards {
+/* 🌿 Botones del menú */
+.home-options {
   display: flex;
   justify-content: center;
-  gap: 2rem;
   flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 1.5rem;
 }
 
-.home-card {
-  background: rgba(255, 255, 255, 0.75);
-  border: 1px solid rgba(76, 175, 80, 0.25);
-  padding: 2rem 2.5rem;
-  border-radius: 16px;
-  min-width: 220px;
-  color: var(--text-dark);
-  background-image: linear-gradient(
-    160deg,
-    var(--background-color),
-    var(--secondary-color)
-  );
-  box-shadow: 0 4px 15px rgba(76, 175, 80, 0.15);
-  transition: all 0.3s ease;
-  cursor: pointer;
-  position: relative;
-  overflow: hidden;
-}
-
-/* ✨ Efecto de brillo suave */
-.home-card::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: -75%;
-  width: 50%;
-  height: 100%;
-  background: rgba(255, 255, 255, 0.25);
-  transform: skewX(-25deg);
-  transition: left 0.6s ease;
-}
-
-.home-card:hover::after {
-  left: 125%;
-}
-
-.home-card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 10px 25px rgba(76, 175, 80, 0.25);
-}
-
-/* Variante con degradado invertido */
-.home-card.alt {
-  background-image: linear-gradient(
-    160deg,
-    var(--secondary-color),
-    var(--primary-color)
-  );
-}
-
-/* ====== TEXTOS DE LAS TARJETAS ====== */
-.home-card h3 {
-  font-size: 1.3rem;
+.menu-option {
+  background: var(--blanco);
+  border: 2px solid var(--verde-medio);
+  color: var(--verde-oscuro);
   font-weight: 600;
-  color: var(--text-dark);
-  margin-bottom: 0.6rem;
+  border-radius: 30px;
+  padding: 12px 28px;
+  cursor: pointer;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  transition: all 0.3s ease;
 }
 
-.home-card p {
-  font-size: 0.95rem;
-  color: #33691e;
-  opacity: 0.9;
-  margin: 0;
+.menu-option:hover {
+  background: linear-gradient(135deg, #81c784, #a5d6a7);
+  color: var(--blanco);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(76, 175, 80, 0.15);
 }
 
-/* ====== ANIMACIONES ====== */
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(15px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+/* 🌿 Opción destacada */
+.menu-option.primary {
+  background: linear-gradient(135deg, #4caf50, #81c784, #aed581);
+  border: none;
+  color: var(--blanco);
 }
 
-/* ====== RESPONSIVE ====== */
+.menu-option.primary:hover {
+  background: linear-gradient(135deg, #43a047, #66bb6a, #9ccc65);
+}
+
+/* 🌿 Animación del logo */
+@keyframes zenBreath {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+/* 🌿 Responsivo */
 @media (max-width: 768px) {
-  .home-container {
-    padding: 2rem 1rem;
+  .home-menu-content {
+    padding: 1.5rem;
   }
 
-  .home-card {
+  .menu-option {
     width: 100%;
-    max-width: 300px;
+    justify-content: center;
   }
 
   .home-title {
     font-size: 1.6rem;
   }
+
+  .home-subtitle {
+    font-size: 1rem;
+  }
+}
+
+.lexion-home-container {
+  background: transparent !important;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

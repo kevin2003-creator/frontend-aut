@@ -6,7 +6,7 @@ export default defineConfig({
   preview: {
     port: 4173,
     strictPort: true,
-    host: '0.0.0.0',
+    host: true, // 👈 importante para Railway
     allowedHosts: ['lexion-daossystem-pro.up.railway.app'],
   },
 })

@@ -1,17 +1,13 @@
-import { useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
-import { FaBars, FaHome, FaUserAlt, FaCog, FaSignOutAlt, FaChartPie, FaBox } from "react-icons/fa";
-import { useAuth } from "../../context/AuthContext"; // ✅ usamos el contexto directamente
+import { FaBars, FaHome, FaUserAlt, FaSignOutAlt, FaChartPie } from "react-icons/fa";
+import { useAuth } from "../../context/AuthContext";
 import "./Sidebar.css";
 
-function Sidebar() {
-  const [isOpen, setIsOpen] = useState(true);
+function Sidebar({ isOpen, setIsOpen }) {
   const { logout } = useAuth();
   const navigate = useNavigate();
 
-  const toggleSidebar = () => {
-    setIsOpen(!isOpen);
-  };
+  const toggleSidebar = () => setIsOpen(!isOpen);
 
   const handleLogout = () => {
     if (window.confirm("¿Estás seguro que deseas cerrar sesión?")) {
@@ -21,55 +17,76 @@ function Sidebar() {
   };
 
   return (
-    <div className={`sidebar-container ${isOpen ? "open" : "collapsed"}`}>
-      {/* ======= HEADER ======= */}
-      <div className="sidebar-header">
-        <div className="sidebar-logo">
-          <span className={`logo-text ${!isOpen && "hidden"}`}>Lexion</span>
+    <>
+      {/* Botón de toggle para móviles */}
+      <button 
+        className="mobile-toggle-btn d-md-none"
+        onClick={toggleSidebar}
+      >
+        <FaBars />
+      </button>
+
+      <div className={`sidebar-container ${isOpen ? "open" : "collapsed"}`}>
+        {/* HEADER */}
+        <div className="sidebar-header">
+          <div className="sidebar-logo">
+            <span className="logo-icon">🧠</span>
+            <span className={`logo-text ${!isOpen && "hidden"}`}>LexicoAU</span>
+          </div>
+          <button className="toggle-btn" onClick={toggleSidebar}>
+            <FaBars />
+          </button>
         </div>
-        <button className="toggle-btn" onClick={toggleSidebar}>
-          <FaBars />
-        </button>
-      </div>
 
-      {/* ======= NAVIGATION ======= */}
-      <ul className="sidebar-nav">
-        <li>
-          <NavLink to="/dashboard" className="nav-item">
-            <FaHome className="nav-icon" />
-            <span className={`nav-text ${!isOpen && "hidden"}`}>Dashboard</span>
-          </NavLink>
-        </li>
-        <li>
-          <NavLink to="/dashboard/users" className="nav-item">
-            <FaUserAlt className="nav-icon" />
-            <span className={`nav-text ${!isOpen && "hidden"}`}>Users</span>
-          </NavLink>
-        </li>
-        <li>
-          <NavLink to="/dashboard/analytics" className="nav-item">
-            <FaChartPie className="nav-icon" />
-            <span className={`nav-text ${!isOpen && "hidden"}`}>Analytics</span>
-          </NavLink>
-        </li>
-        <li>
-          <NavLink to="/dashboard/settings" className="nav-item">
-            <FaCog className="nav-icon" />
-            <span className={`nav-text ${!isOpen && "hidden"}`}>Settings</span>
-          </NavLink>
-        </li>
-      </ul>
+        {/* NAVIGATION */}
+        <ul className="sidebar-nav">
+          <li>
+            <NavLink 
+              to="/dashboard" 
+              className={({ isActive }) => 
+                `nav-item ${isActive ? "active" : ""}`
+              }
+              end
+            >
+              <FaHome className="nav-icon" />
+              <span className={`nav-text ${!isOpen && "hidden"}`}>Inicio</span>
+            </NavLink>
+          </li>
+          <li>
+            <NavLink 
+              to="/dashboard/analizador" 
+              className={({ isActive }) => 
+                `nav-item ${isActive ? "active" : ""}`
+              }
+            >
+              <FaChartPie className="nav-icon" />
+              <span className={`nav-text ${!isOpen && "hidden"}`}>Analizador</span>
+            </NavLink>
+          </li>
+          <li>
+            <NavLink 
+              to="/dashboard/profile" 
+              className={({ isActive }) => 
+                `nav-item ${isActive ? "active" : ""}`
+              }
+            >
+              <FaUserAlt className="nav-icon" />
+              <span className={`nav-text ${!isOpen && "hidden"}`}>Perfil</span>
+            </NavLink>
+          </li>
+        </ul>
 
-      {/* ======= FOOTER ======= */}
-      <div className="sidebar-footer">
-        <FaSignOutAlt
-          className="nav-icon logout-icon"
-          onClick={handleLogout}
-          title="Cerrar sesión"
-        />
-         <span className={`logo-text ${!isOpen && "hidden"}`}>Cerrar sesion</span>
+        {/* FOOTER */}
+        <div className="sidebar-footer">
+          <button className="logout-btn" onClick={handleLogout}>
+            <FaSignOutAlt className="logout-icon" />
+            <span className={`logout-text ${!isOpen && "hidden"}`}>
+              Cerrar sesión
+            </span>
+          </button>
+        </div>
       </div>
-    </div>
+    </>
   );
 }
 

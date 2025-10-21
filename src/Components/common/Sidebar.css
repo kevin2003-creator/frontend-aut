@@ -1,10 +1,9 @@
-/* Sidebar.css — Estilo Eco Wellness Moderno 🌿 */
+/* Sidebar.css - Versión Mejorada */
 :root {
-  /* 🎨 Paleta armoniosa */
-  --dominant-color: #a8e6cf; /* Fondo suave 60% */
-  --secondary-color: #81c784; /* Contraste natural 30% */
-  --accent-color: #4caf50; /* Acento 10% */
-  --dark-green: #2e7d32; /* Textos oscuros */
+  --dominant-color: #a8e6cf;
+  --secondary-color: #81c784;
+  --accent-color: #4caf50;
+  --dark-green: #2e7d32;
   --hover-glow: rgba(76, 175, 80, 0.25);
   --sidebar-bg: linear-gradient(160deg, var(--dominant-color), var(--secondary-color));
   --text-color: #1b5e20;
@@ -25,7 +24,7 @@
   box-shadow: 4px 0 18px rgba(0, 0, 0, 0.15);
   border-right: 1px solid rgba(76, 175, 80, 0.3);
   transition: all 0.4s ease;
-  z-index: 999;
+  z-index: 1000;
   backdrop-filter: blur(16px);
 }
 
@@ -39,6 +38,7 @@
   align-items: center;
   justify-content: space-between;
   padding: 1.2rem 1rem 0.8rem;
+  border-bottom: 1px solid rgba(76, 175, 80, 0.2);
 }
 
 .sidebar-logo {
@@ -55,8 +55,14 @@
   color: var(--accent-color);
 }
 
+.logo-text {
+  transition: opacity 0.3s ease;
+}
+
 .logo-text.hidden {
-  display: none;
+  opacity: 0;
+  width: 0;
+  overflow: hidden;
 }
 
 .toggle-btn {
@@ -66,18 +72,21 @@
   font-size: 1.4rem;
   cursor: pointer;
   transition: transform 0.3s ease, color 0.3s ease;
+  padding: 5px;
+  border-radius: 5px;
 }
 
 .toggle-btn:hover {
   transform: rotate(90deg);
   color: var(--accent-color);
+  background: rgba(255, 255, 255, 0.2);
 }
 
 /* ===== NAVEGACIÓN ===== */
 .sidebar-nav {
   list-style: none;
   padding: 0;
-  margin-top: 1.5rem;
+  margin: 1.5rem 0;
   flex: 1;
 }
 
@@ -94,6 +103,7 @@
   margin: 0.25rem 0.8rem;
   transition: all 0.3s ease;
   position: relative;
+  white-space: nowrap;
 }
 
 .nav-item:hover {
@@ -111,54 +121,114 @@
 .nav-icon {
   font-size: 1.3rem;
   min-width: 25px;
-  color: var(--dark-green);
+  text-align: center;
+  transition: color 0.3s ease;
+}
+
+.nav-text {
+  transition: all 0.3s ease;
+  overflow: hidden;
 }
 
 .nav-text.hidden {
   opacity: 0;
   width: 0;
-  overflow: hidden;
+  margin-left: 0;
 }
 
 /* ===== FOOTER / LOGOUT ===== */
 .sidebar-footer {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 1.2rem 0;
+  padding: 1rem;
   border-top: 1px solid rgba(76, 175, 80, 0.2);
   background: rgba(255, 255, 255, 0.25);
-  border-radius: 18px 18px 0 0;
+}
+
+.logout-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  width: 100%;
+  padding: 0.8rem 1rem;
+  background: transparent;
+  border: none;
+  color: var(--text-color);
+  font-weight: 500;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none;
+}
+
+.logout-btn:hover {
+  background: rgba(255, 23, 68, 0.1);
+  color: #ff1744;
+  transform: translateX(3px);
 }
 
 .logout-icon {
-  font-size: 1.5rem;
-  color: var(--text-color);
-  cursor: pointer;
+  font-size: 1.3rem;
+  min-width: 25px;
+  text-align: center;
+}
+
+.logout-text {
   transition: all 0.3s ease;
 }
 
-.logout-icon:hover {
-  color: #ff1744;
-  transform: scale(1.2);
-  text-shadow: 0 0 10px rgba(255, 23, 68, 0.4);
+.logout-text.hidden {
+  opacity: 0;
+  width: 0;
+  overflow: hidden;
 }
 
-/* ===== EFECTOS ===== */
-.sidebar-container,
-.nav-item,
-.toggle-btn,
-.sidebar-footer {
-  transition: all 0.4s ease;
-}
-
-/* ===== RESPONSIVE ===== */
+/* ===== RESPONSIVE PARA MÓVILES ===== */
 @media (max-width: 768px) {
   .sidebar-container {
-    width: 75px;
+    transform: translateX(-100%);
+    width: 280px;
   }
+  
+  .sidebar-container.open {
+    transform: translateX(0);
+  }
+  
+  .sidebar-container.collapsed {
+    transform: translateX(-100%);
+    width: 280px;
+  }
+  
+  /* Botón de toggle para móviles */
+  .mobile-toggle-btn {
+    position: fixed;
+    top: 15px;
+    left: 15px;
+    z-index: 999;
+    background: var(--accent-color);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 10px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+  }
+}
 
-  .nav-text {
-    display: none;
+/* ===== ANIMACIONES ===== */
+@keyframes slideIn {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideOut {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-100%);
   }
 }
